@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<properties>
+   <application>High_Accuracy_Visualizer</application>
+   <icon>High_Accuracy_Visualizer/installer/GUIDesigner_projectShortcut.ico</icon>
+   <banner>High_Accuracy_Visualizer/installer/installerTopBanner.gif</banner>
+   <licensefile>High_Accuracy_Visualizer/installer/license.txt</licensefile>
+   <readme>High_Accuracy_Visualizer/docs/readme.txt</readme>
+   <releasenotes>High_Accuracy_Visualizer/docs/readme.txt</releasenotes>
+<gcruntime_version>5.0.0</gcruntime_version>
+<app_version>1.0.1</app_version>
+   <components_version>1.7</components_version>
+</properties>

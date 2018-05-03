@@ -1,0 +1,577 @@
+<link rel="import" href="../ti-widget-readme/ti-widget-readme.html">
+<link rel="import" href="../ti-core-stylesheets/ti-core-stylesheets.html">
+<link rel="import" href="../ti-widget-menubar/ti-widget-menubar.html">
+<link rel="import" href="../ti-widget-menubar/ti-widget-filemenu.html">
+<link rel="import" href="../ti-widget-menubar/ti-widget-optionsmenu.html">
+<link rel="import" href="../ti-widget-menubar/ti-widget-helpmenu.html">
+<link rel="import" href="../ti-widget-toast/ti-widget-toast.html">
+<link rel="import" href="../ti-widget-common/ti-widget-container.html">
+<link rel="import" href="../ti-widget-common/ti-widget-tabcontainer.html">
+<link rel="import" href="../ti-widget-common/ti-widget-tab.html">
+<link rel="import" href="../ti-widget-plot/ti-widget-plot.html">
+<link rel="import" href="../ti-widget-common/ti-widget-image.html">
+<link rel="import" href="../ti-widget-common/ti-widget-label.html">
+<link rel="import" href="../ti-widget-common/ti-widget-textbox.html">
+<link rel="import" href="../ti-widget-common/ti-widget-checkbox.html">
+<link rel="import" href="../ti-widget-common/ti-widget-button.html">
+<link rel="import" href="../ti-widget-common/ti-widget-droplist.html">
+<link rel="import" href="../ti-widget-statusbar/ti-widget-statusbar.html">
+<link rel="import" href="../ti-widget-streamsaver/ti-widget-streamsaver.html">
+<link rel="import" href="../ti-core-databind/ti-serialio-model.html">
+
+<dom-module name="my-element">
+  <template>
+
+<style is="custom-style">
+  #ti_widget_menubar {
+    top: 0px;
+    width: 100%;
+    margin: 0px;
+    z-index: 1100;
+    position: absolute;
+  }
+  html .viewport {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 28px;
+    top: 41px;
+    border: medium none;
+  }
+  #viewport {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    overflow: auto;
+  }
+  #ti_widget_toast_common {
+    height: 45px;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+  }
+  #ti_widget_statusbar {
+    position: static;
+  }
+  #ti_widget_tabcontainer_main {
+    margin: 5px;
+    width: 99%;
+    height: 98%;
+  }
+  #ti_widget_tab_plot {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    overflow: initial;
+  }
+  #ti_widget_button_load_cfg {
+    left: 10px;
+    top: 130px;
+    position: absolute;
+  }
+  #ti_widget_plot1 {
+    width: 480px;
+    height: 500px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+  }
+  #ti_widget_plot2 {
+    width: 480px;
+    height: 500px;
+    position: absolute;
+    left: 500px;
+    top: 0px;
+  }
+  #ti_widget_plot5 {
+    width: 480px;
+    height: 500px;
+    left: 140px;
+    top: 530px;
+    position: absolute;
+  }
+  #ti_widget_container_cb {
+    width: 80px;
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    top: 120px;
+    position: absolute;
+    height: 260px;
+    left: 1000px;
+  }
+  #ti_widget_label_cbmin {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    position: absolute;
+    left: 35px;
+    bottom: 10px;
+  }
+  #ti_widget_label_cbmax {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 35px;
+    top: 0px;
+    width: 0px;
+    height: 0px;
+    position: absolute;
+  }
+  #ti_widget_container_summary {
+    border: 1px solid gray;
+    position: absolute;
+    top: 0px;
+    width: 370px;
+    height: 500px;
+    overflow: visible;
+    left: 1100px;
+  }
+  #ti_widget_label_depth {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 10px;
+    top: 10px;
+    position: absolute;
+  }
+  #ti_widget_textbox_depth {
+    left: 240px;
+    top: 10px;
+    position: absolute;
+    width: 110px;
+  }
+  #ti_widget_label_width {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 10px;
+    top: 40px;
+    position: absolute;
+  }
+  #ti_widget_textbox_width {
+    left: 240px;
+    top: 40px;
+    position: absolute;
+    width: 110px;
+  }
+  #ti_widget_label_rpymax {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 10px;
+    top: 70px;
+    position: absolute;
+  }
+  #ti_widget_textbox_rpymax {
+    font-size: inherit;
+    left: 240px;
+    top: 70px;
+    position: absolute;
+    width: 110px;
+  }
+  #ti_widget_checkbox_rplogscale {
+    text-align: left;
+    font-size: inherit;
+    left: 10px;
+    top: 100px;
+    position: absolute;
+  }
+  #ti_widget_label_summarytab {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 10px;
+    top: 200px;
+    position: absolute;
+  }
+  #ti_widget_droplist_summarytab {
+    width: 110px;
+    height: auto;
+    font-size: inherit;
+    left: 240px;
+    top: 200px;
+    position: absolute;
+  }
+  #ti_widget_container_summarytab {
+    height: 265px;
+    width: 350px;
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    overflow: auto;
+    left: 0px;
+    top: 230px;
+    position: absolute;
+  }
+  #ti_widget_label1 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 10px;
+    top: 0px;
+    position: absolute;
+  }
+  #ti_widget_value1 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 250px;
+    top: 0px;
+    position: absolute;
+  }
+  #ti_widget_label2 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 10px;
+    top: 30px;
+    position: absolute;
+  }
+  #ti_widget_value2 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 250px;
+    top: 30px;
+    position: absolute;
+  }
+  #ti_widget_label3 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 10px;
+    top: 60px;
+    position: absolute;
+  }
+  #ti_widget_value3 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 250px;
+    top: 60px;
+    position: absolute;
+  }
+  #ti_widget_label4 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 10px;
+    top: 90px;
+    position: absolute;
+  }
+  #ti_widget_value4 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 250px;
+    top: 90px;
+    position: absolute;
+  }
+  #ti_widget_label5 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 10px;
+    top: 120px;
+    position: absolute;
+  }
+  #ti_widget_value5 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 250px;
+    top: 120px;
+    position: absolute;
+  }
+  #ti_widget_label6 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 10px;
+    top: 150px;
+    position: absolute;
+  }
+  #ti_widget_value6 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 250px;
+    top: 150px;
+    position: absolute;
+  }
+  #ti_widget_label7 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 10px;
+    top: 180px;
+    position: absolute;
+  }
+  #ti_widget_value7 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 250px;
+    top: 180px;
+    position: absolute;
+  }
+  #ti_widget_label8 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 10px;
+    top: 210px;
+    position: absolute;
+  }
+  #ti_widget_value8 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 250px;
+    top: 210px;
+    position: absolute;
+  }
+  #ti_widget_label9 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 10px;
+    top: 240px;
+    position: absolute;
+  }
+  #ti_widget_value9 {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 250px;
+    top: 240px;
+    position: absolute;
+  }
+  #label_help_about {
+    margin: 20px;
+  }
+  #textbox_help_about {
+    width: 500px;
+    margin: 0px 20px;
+    padding: 2px;
+    overflow: auto;
+    resize: none;
+  }
+  #ti_widget_filemenu {
+    display: none;
+  }
+  #ti_widget_label_status_message {
+    text-align: left;
+    text-decoration: none;
+    font-weight: bold;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    top: 663px;
+    left: 705px;
+    position: absolute;
+    height: 40px;
+    width: 550px;
+  }
+  #ti_widget_button_record {
+    left: 1110px;
+    top: 520px;
+    position: absolute;
+  }
+  #ti_widget_label {
+    text-align: left;
+    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    font-size: inherit;
+    white-space: nowrap;
+    left: 1120px;
+    top: 580px;
+    position: absolute;
+  }
+</style>
+
+<ti-widget-readme background-color="#ffffff" elevation="5" title-text='How to use "High Accuracy Visualizer"' id="readmeViewer" class="_TI_" readme-file-exists pin></ti-widget-readme>
+<ti-core-stylesheets class="_TI_" id="ti_core_stylesheets"></ti-core-stylesheets>
+<style>
+  #ti_widget_menubar {
+    background-color: rgb(204, 0, 0);
+  }
+  html .ti-theme paper-tabs {
+    color: rgb(35, 31, 32);
+    background-color: rgb(229, 229, 229);
+  }
+  paper-tabs paper-tab.iron-selected {
+    color: rgb(255, 255, 255);
+    background-color: rgb(17, 85, 102);
+  }
+  .labelhdr {
+    color: rgb(28, 153, 196) !important;
+  }
+  ti-widget-button {
+    background-color: rgb(17, 136, 153) !important;
+  }
+</style>
+
+<ti-widget-menubar product-name="High Accuracy Visualizer" id="ti_widget_menubar" pin horizontal class="_TI_ x-scope ti-widget-menubar-0" layout>
+    <ti-widget-filemenu id="ti_widget_filemenu" class="_TI_" layout></ti-widget-filemenu>
+    <ti-widget-optionsmenu id="ti_widget_optionsmenu" class="_TI_" layout></ti-widget-optionsmenu>
+    <ti-widget-helpmenu id="ti_widget_helpmenu" class="_TI_" layout></ti-widget-helpmenu>
+    <ti-widget-toast message="some messages here" duration="3000" id="ti_widget_toast_common" class="_TI_ toolMenuItem x-scope ti-widget-toast-0"></ti-widget-toast>
+</ti-widget-menubar>
+
+<ti-widget-container font-size="inherit" auto-scroll font-style="normal" font-weight="normal" text-align="left" text-decoration="none" visible id="viewport" title class="_TI_ viewport" pin>
+    <ti-widget-tabcontainer selected-index="0" id="ti_widget_tabcontainer_main" class="_TI_" layout>
+        <ti-widget-tab name="Plots" icon-style="width:25px;padding-right:5px;" font-size="inherit" font-style="normal" font-weight="normal" text-align="left" text-decoration="none" visible id="ti_widget_tab_plot" title class="_TI_ iron-selected">
+            <ti-widget-plot id="ti_widget_plot1" config='{"displaylogo":false, "modeBarButtonsToRemove":["sendDataToCloud"]}' layout='{"autosize":"false", "title":"X-Y Scatter Plot","xaxis":{"title":"Distance along lateral axis (meters)","range":[-2,2]},"yaxis":{"title":"Distance along longitudinal axis (meters)","range":[0,3]}}' data='[{"x":[2,-2],"y":[2,0.01],"mode":"markers","type":"scatter"}]' class="_TI_" title visible></ti-widget-plot>
+            <ti-widget-plot id="ti_widget_plot2" config='{"displaylogo":false, "modeBarButtonsToRemove":["sendDataToCloud"]}' layout='{"autosize":"false", "title":"Range Profile","xaxis":{"title":"Range (meters)"}}' data='[{"x":[2,3,4,5],"y":[11,17,2,4],"mode":"lines","type":"scatter"},{"x":[1,2,3,4],"y":[3,4,5,6],"mode":"markers","type":"scatter"}]' class="_TI_" title visible></ti-widget-plot>
+            <ti-widget-plot id="ti_widget_plot5" config='{"displaylogo":false, "modeBarButtonsToRemove":["sendDataToCloud"]}' layout='{"autosize":"false", "title":"Statistics","xaxis":{"title":"Frames"},"yaxis":{"title":"% CPU Load"}}' data='[{"x":[1,2,3],"y":[11,17,12],"mode":"lines","type":"scatter"}]' class="_TI_" title visible></ti-widget-plot>
+            <ti-widget-container font-size="inherit" font-style="normal" font-weight="normal" text-align="left" text-decoration="none" visible id="ti_widget_container_cb" class="_TI_" title>
+                <ti-widget-image image-path="app/images/colorbar.png" lock-aspect-ratio hover-effect="no" visible id="ti_widget_image_cb" class="_TI_"></ti-widget-image>
+                <ti-widget-label label="Min" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_label_cbmin" class="_TI_" title></ti-widget-label>
+                <ti-widget-label label="Max" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_label_cbmax" class="_TI_" title></ti-widget-label>
+            </ti-widget-container>
+            <ti-widget-container font-size="inherit" auto-scroll font-style="normal" font-weight="normal" text-align="left" text-decoration="none" visible id="ti_widget_container_summary" class="_TI_" title>
+                <ti-widget-label label="Range Depth" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible tooltip="This controls the Y axis of scatter plot and X axis of Doppler-Range plot. The value can be changed when the sensor is in stop state (Hint: use the STOP button) and changes will apply when the sensor is started again (using reconfiguration method or START button)" id="ti_widget_label_depth" class="_TI_" title></ti-widget-label>
+                <ti-widget-textbox value="10" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible tooltip="This controls the Y axis of scatter plot and X axis of Doppler-Range plot. The value can be changed when the sensor is in stop state (Hint: use the STOP button) and changes will apply when the sensor is started again (using reconfiguration method or START button)" id="ti_widget_textbox_depth" class="_TI_ x-scope ti-widget-textbox-0" placeholder="Enter a number"></ti-widget-textbox>
+                <ti-widget-label label="Range Width" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible tooltip="This controls the X axis of scatter plot and should be 1/2 of range depth for a well balanced plot. The value can be changed when the sensor is in stop state (Hint: use the STOP button) and changes will apply when the sensor is started again (using reconfiguration method or START button)" id="ti_widget_label_width" class="_TI_" title></ti-widget-label>
+                <ti-widget-textbox value="5" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible tooltip="This controls the X axis of scatter plot and should be 1/2 of range depth for a well balanced plot. The value can be changed when the sensor is in stop state (Hint: use the STOP button) and changes will apply when the sensor is started again (using reconfiguration method or START button)" id="ti_widget_textbox_width" class="_TI_ x-scope ti-widget-textbox-0" placeholder="Enter a number"></ti-widget-textbox>
+                <ti-widget-label label="Range Profile Y max" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible tooltip="This controls the Y axis of Range profile plot. The value can be changed when the sensor is in stop state (Hint: use the STOP button) and changes will apply when the sensor is started again (using reconfiguration method or START button)" id="ti_widget_label_rpymax" class="_TI_" title></ti-widget-label>
+                <ti-widget-textbox value="1e4" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_textbox_rpymax" class="_TI_ x-scope ti-widget-textbox-0"></ti-widget-textbox>
+                <ti-widget-checkbox label="Range Profile Log Scale" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible tooltip="This controls whether linear or log values are plotted in the Range Profile plot. The value can be changed when the sensor is in stop state (Hint: use the STOP button) and changes will apply when the sensor is started again (using reconfiguration method or START button)" id="ti_widget_checkbox_rplogscale" onchange="onRangeProfileLogScale()" class="_TI_"></ti-widget-checkbox>
+                <ti-widget-button label="Load Config from PC and Send" button-type="default" raised visible bindable-trigger="3" id="ti_widget_button_load_cfg" class="_TI_ x-scope ti-widget-button-0" onclick="onLoadCfg()" elevation="1" animated title></ti-widget-button>
+                <ti-widget-label label="Display Parameters" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_label_summarytab" class="_TI_" title></ti-widget-label>
+                <ti-widget-droplist selected-index="1" selected-value="Scene" selected-text="Scene" values="Chirp/Frame|Scene|Profiling" labels="Chirp/Frame|Scene|Profiling" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" text-align="left" visible id="ti_widget_droplist_summarytab" onchange="onSummaryTab()" class="_TI_ x-scope ti-widget-droplist-0"></ti-widget-droplist>
+                <ti-widget-container font-size="inherit" auto-scroll font-style="normal" font-weight="normal" text-align="left" text-decoration="none" visible id="ti_widget_container_summarytab" title class="_TI_">
+                    <ti-widget-label label="label" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_label1" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="value" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_value1" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="label" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_label2" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="value" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_value2" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="label" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_label3" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="value" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_value3" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="label" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_label4" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="value" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_value4" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="label" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_label5" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="value" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_value5" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="label" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_label6" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="value" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_value6" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="label" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_label7" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="value" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_value7" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="label" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_label8" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="value" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_value8" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="label" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_label9" class="_TI_" title></ti-widget-label>
+                    <ti-widget-label label="value" text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_value9" class="_TI_" title></ti-widget-label>
+                </ti-widget-container>
+            </ti-widget-container>
+            <ti-widget-button label="Record Start" button-type="default" raised visible bindable-trigger="15" id="ti_widget_button_record" class="_TI_ x-scope ti-widget-button-0" onclick="onRecordPause()" elevation="1" animated title></ti-widget-button>
+            <ti-widget-label label=" " text-align="left" font-size="inherit" font-style="normal" font-weight="normal" text-decoration="none" visible id="ti_widget_label" class="_TI_"></ti-widget-label>
+        </ti-widget-tab>
+    </ti-widget-tabcontainer>
+    <ti-widget-label label="<temp>" text-align="left" font-size="inherit" font-color="#ff0000" font-style="normal" font-weight="bold" text-decoration="none" wrap nonvisible tooltip="Correct the error and try sending configuration again" id="ti_widget_label_status_message" class="_TI_"></ti-widget-label>
+</ti-widget-container>
+
+<ti-widget-statusbar app-icon-style="color: white;display:inline-block;" icon-name="ti-core-icons:nolink" id="ti_widget_statusbar" class="_TI_"></ti-widget-statusbar>
+<input type="file" class="_TI_" id="myFileLoadDialog">
+<ti-widget-streamsaver id="ti_widget_streamsaver" class="_TI_"></ti-widget-streamsaver>
+
+<paper-dialog class="_TI_ x-scope paper-dialog-0" id="dialog_help_about" modal>
+    <h2 id="label_help_about" class="_TI_">Help About</h2>
+    <textarea readonly rows="10" id="textbox_help_about" class="_TI_"></textarea>
+    <div class="buttons _TI_">
+        <paper-button class="_TI_ x-scope paper-button-0" dialog-confirm autofocus animated elevation="0">Close</paper-button>
+    </div>
+</paper-dialog>
+
+<ti-serialio-model default-baud-rate="921600" rx-packet-data-format="raw" tx-packet-data-format="json" id="DATA_port" hidden class="_TI_"></ti-serialio-model>
+
+<ti-serialio-model default-baud-rate="115200" rx-packet-data-format="cr" tx-packet-data-format="cr" id="CFG_port" hidden target-folder="target" class="_TI_"></ti-serialio-model>
+
+</template>
+ <script>
+  Polymer({
+     is: 'my-element',
+    });
+
+  </script>
+</dom-module>
